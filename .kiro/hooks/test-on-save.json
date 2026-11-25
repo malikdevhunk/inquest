@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "test-on-save",
+      "description": "Re-run the inquest unit tests after a source, fixture, or test file is saved.",
+      "trigger": "PostFileSave",
+      "matcher": "(src/|fixtures/|tests/).+\\.(mjs|json)$",
+      "action": {
+        "type": "command",
+        "command": "npm test"
+      },
+      "timeout": 60,
+      "enabled": true
+    }
+  ]
+}

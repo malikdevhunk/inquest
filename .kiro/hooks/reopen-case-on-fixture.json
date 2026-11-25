@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "reopen-case-on-fixture",
+      "description": "When a fixture changes, reopen that case and summarise only what the record supports.",
+      "trigger": "PostFileSave",
+      "matcher": "fixtures/.+\\.json$",
+      "action": {
+        "type": "agent",
+        "prompt": "A fixture file changed. Re-run the inquest for that case using the project engine (npm test or the local API). Summarise the witness list and the verdict. Use only facts in the record. If a field is missing, say it is not in the record. Do not invent a reason for a failure."
+      },
+      "enabled": true
+    }
+  ]
+}

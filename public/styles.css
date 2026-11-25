@@ -1,0 +1,50 @@
+:root {
+  --ink: #1c140c;
+  --paper: #f4ead3;
+  --rule: #c8b896;
+  --stone: #1a1d24;
+  --stone-2: #262b36;
+  --wax: #7a1d1d;
+  --held: #215c3a;
+  --failed: #7a1d1d;
+  --mute: #8a7d68;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--stone); color: var(--paper); font-family: Georgia, "Times New Roman", serif; }
+.mast { padding: 2.5rem 6vw 1.5rem; border-bottom: 1px solid #3a3f4c; }
+.eyebrow { letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.75rem; color: #d8c49a; margin: 0 0 0.6rem; }
+h1 { font-weight: 600; font-size: 2.1rem; margin: 0 0 0.6rem; }
+.lede { max-width: 40rem; margin: 0; line-height: 1.5; color: #cfc6b4; }
+main { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; padding: 1.5rem 6vw 3rem; }
+.docket, .panel, .letter { background: var(--stone-2); border: 1px solid #3a3f4c; padding: 1rem 1.1rem 1.2rem; }
+.letter { grid-column: 1 / -1; background: var(--paper); color: var(--ink); }
+h2 { font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 0.8rem; }
+.letter h2 { color: var(--wax); }
+.cases { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.cases button {
+  background: transparent; color: var(--paper); border: 1px solid var(--rule);
+  padding: 0.55rem 0.8rem; font: inherit; cursor: pointer;
+}
+.cases button[aria-pressed="true"], .cases button:hover { background: #d8c49a; color: var(--ink); }
+.item { border-top: 1px solid #3a3f4c; padding: 0.7rem 0 0.5rem; }
+.letter .item { border-top-color: var(--rule); }
+.item h3 { margin: 0 0 0.25rem; font-size: 1rem; }
+.item p, .item dl { margin: 0; font-size: 0.92rem; line-height: 1.45; }
+.item dt { color: var(--mute); float: left; width: 5.5rem; clear: left; }
+.item dd { margin: 0 0 0.15rem 5.5rem; }
+.held { color: #9ad0ae; }
+.failed { color: #f0a3a3; }
+.letter .held { color: var(--held); }
+.letter .failed { color: var(--failed); }
+pre {
+  white-space: pre-wrap; font-family: Georgia, "Times New Roman", serif;
+  margin: 0; line-height: 1.5; font-size: 1rem;
+}
+.seal {
+  display: inline-block; margin: 1rem 0 0; padding: 0.55rem 0.8rem;
+  border: 2px solid var(--wax); color: var(--wax); letter-spacing: 0.04em;
+  text-transform: uppercase; font-size: 0.8rem;
+}
+footer { padding: 0 6vw 2rem; color: #8e8a80; font-size: 0.9rem; }
+@media (max-width: 840px) { main { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

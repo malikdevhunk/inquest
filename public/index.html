@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inquest</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="mast">
+    <p class="eyebrow">Inquest</p>
+    <h1>The record, and nothing else.</h1>
+    <p class="lede">A coroner's sitting for a dead or suspicious smart-contract transaction. Witnesses speak only to what is in the trace. The verdict is sealed with a hash.</p>
+  </header>
+  <main>
+    <section class="docket" aria-label="Case docket">
+      <h2>Docket</h2>
+      <div id="cases" class="cases"></div>
+    </section>
+    <section class="panel" aria-label="Witnesses">
+      <h2>Witnesses</h2>
+      <div id="witnesses" class="list"></div>
+    </section>
+    <section class="panel" aria-label="Charge sheet">
+      <h2>Charge sheet</h2>
+      <div id="charges" class="list"></div>
+    </section>
+    <section class="letter" aria-label="Verdict">
+      <h2>Verdict</h2>
+      <pre id="verdict">Open a case from the docket.</pre>
+      <p id="seal" class="seal" hidden></p>
+    </section>
+  </main>
+  <footer>
+    <p>Designed, built and developed by Saddam Malik, India. Missing facts are marked “not in the record.”</p>
+  </footer>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
