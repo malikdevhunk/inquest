@@ -35,18 +35,21 @@ That writes `docs/`. You can also open the chamber from those files once they ar
 
 `npm test` rebuilds every official case, checks the witness lists, evaluates the charge sheets, and asserts that a missing field is reported as "not in the record" rather than guessed.
 
-## Live URL (once the public repo exists)
+## Live demo
 
-Preferred host: **GitHub Pages**, free, from this repository.
+The chamber runs in the browser, no login and no server: https://malikdevhunk.github.io/inquest/
 
-1. Push `main` to `https://github.com/malikdevhunk/inquest` (this folder).
-2. On the repo: Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main` → Folder: `/docs` → Save.
-3. After a few minutes the chamber should be at `https://malikdevhunk.github.io/inquest/`.
-4. Put that URL on the Kiroween submission form. If login were ever needed, judges-only credentials would go in the Devpost form, not on this page. This demo has no login.
+It is served from the `docs/` folder of this repository by GitHub Pages (Settings → Pages → Deploy from a branch → `main` → `/docs`). Run `npm run build:pages` after changing anything in `public/`, `src/`, or `fixtures/`, then commit `docs/`.
 
-The Pages tree is already static: HTML, CSS, JS modules, and the fixture JSON. The inquest runs in the browser. No Node server is required in production.
+Fallback hosts, same `docs/` folder, no build command: Cloudflare Pages or Netlify drop-upload.
 
-Fallback hosts, same `docs/` folder, no build command: Cloudflare Pages or Netlify drop-upload. Keep the path so relative links (`./styles.css`, `./fixtures/…`) still work. Custom domain is optional; do not put a home address or a personal mobile number anywhere on the demo.
+## Kiro in this repository
+
+The `.kiro/` directory at the root holds the project's steering, spec, and hooks:
+
+- `.kiro/steering/` — product, tech, structure, and `facts.md`, the rule that witnesses answer only from the record and otherwise say "not in the record."
+- `.kiro/specs/inquest-protocol/` — requirements, design, and tasks for the inquest protocol.
+- `.kiro/hooks/` — re-run the tests when source or a fixture is saved, and re-open a case when its fixture changes.
 
 ## Screenshots plan (take these from the live URL)
 
