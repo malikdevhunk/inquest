@@ -1,0 +1,22 @@
+{
+  "cases": [
+    {
+      "id": "clean-transfer",
+      "title": "Treasury transfer, 18 November",
+      "status": "ok",
+      "network": "local-fixture"
+    },
+    {
+      "id": "failed-swap",
+      "title": "Nightmarket swap, 18 November",
+      "status": "reverted",
+      "network": "local-fixture"
+    },
+    {
+      "id": "stale-oracle",
+      "title": "Perp fill after a silent oracle, 24 November",
+      "status": "ok",
+      "network": "local-fixture"
+    }
+  ]
+}

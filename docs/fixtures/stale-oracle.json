@@ -1,0 +1,92 @@
+{
+  "id": "stale-oracle",
+  "title": "Perp fill after a silent oracle, 24 November",
+  "network": "local-fixture",
+  "txHash": "0xccc3330000000000000000000000000000000000000000000000000000000003",
+  "from": "0x4444444444444444444444444444444444444444",
+  "to": "0x5555555555555555555555555555555555555555",
+  "status": "ok",
+  "summary": "The fill was recorded as successful. The last oracle update in the record is older than the market's freshness window, so the freshness charge fails.",
+  "calls": [
+    {
+      "id": "call-1",
+      "from": "0x4444444444444444444444444444444444444444",
+      "to": "0x5555555555555555555555555555555555555555",
+      "fn": "openOrIncrease",
+      "depth": 0,
+      "ok": true
+    },
+    {
+      "id": "call-2",
+      "from": "0x5555555555555555555555555555555555555555",
+      "to": "0x6666666666666666666666666666666666666666",
+      "fn": "readIndex",
+      "depth": 1,
+      "ok": true
+    }
+  ],
+  "events": [
+    {
+      "id": "event-1",
+      "name": "IndexUpdated",
+      "address": "0x6666666666666666666666666666666666666666",
+      "data": {
+        "index": "500000",
+        "ts": "1732474800"
+      }
+    },
+    {
+      "id": "event-2",
+      "name": "PositionOpened",
+      "address": "0x5555555555555555555555555555555555555555",
+      "data": {
+        "size": "1000000",
+        "fill": "500000"
+      }
+    }
+  ],
+  "storage": [
+    {
+      "id": "storage-1",
+      "label": "last_index",
+      "before": "500000",
+      "after": "500000"
+    },
+    {
+      "id": "storage-2",
+      "label": "position_size",
+      "before": "0",
+      "after": "1000000"
+    }
+  ],
+  "quantities": {
+    "block_ts": "1732489200",
+    "last_index_ts": "1732474800",
+    "max_stale_secs": "3600",
+    "index": "500000",
+    "fill_price": "500000",
+    "tick": "1000"
+  },
+  "charges": [
+    {
+      "id": "C1",
+      "name": "Oracle is fresh at the fill",
+      "expr": "block_ts - last_index_ts <= max_stale_secs"
+    },
+    {
+      "id": "C2",
+      "name": "Fill stays within one tick of the last index",
+      "expr": "fill_price <= index + tick"
+    },
+    {
+      "id": "C3",
+      "name": "Fill is not below one tick of the last index",
+      "expr": "fill_price >= index - tick"
+    },
+    {
+      "id": "C4",
+      "name": "The position size is recorded after the fill",
+      "expr": "position_size_after > 0"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
-import { createHash } from "node:crypto";
+import { sha256Hex } from "./hash.mjs";
 import { ask } from "./inquest.mjs";
 
-export function renderVerdict(sitting) {
+export function verdictBody(sitting) {
   const { record, charges, finding } = sitting;
   const lines = [];
   lines.push("INQUEST VERDICT");
@@ -24,8 +24,12 @@ export function renderVerdict(sitting) {
   }
   lines.push("");
   lines.push("This letter uses only facts in the record. Missing fields are marked not in the record.");
-  const body = lines.join("\n");
-  const seal = createHash("sha256").update(body, "utf8").digest("hex");
+  return lines.join("\n");
+}
+
+export async function renderVerdict(sitting) {
+  const body = verdictBody(sitting);
+  const seal = await sha256Hex(body);
   const letter = `${body}\nSeal: ${seal}\n`;
-  return { letter, seal, finding };
+  return { letter, seal, finding: sitting.finding };
 }

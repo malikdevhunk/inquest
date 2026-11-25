@@ -1,0 +1,77 @@
+{
+  "id": "failed-swap",
+  "title": "Nightmarket swap, 18 November",
+  "network": "local-fixture",
+  "txHash": "0xaaa1110000000000000000000000000000000000000000000000000000000001",
+  "from": "0x1111111111111111111111111111111111111111",
+  "to": "0x2222222222222222222222222222222222222222",
+  "status": "reverted",
+  "summary": "The top-level call reports a revert after the router tried to pay out more than the pool could support.",
+  "calls": [
+    {
+      "id": "call-1",
+      "from": "0x1111111111111111111111111111111111111111",
+      "to": "0x2222222222222222222222222222222222222222",
+      "fn": "swapExactTokensForTokens",
+      "depth": 0,
+      "ok": false,
+      "error": "INSUFFICIENT_OUTPUT"
+    },
+    {
+      "id": "call-2",
+      "from": "0x2222222222222222222222222222222222222222",
+      "to": "0x3333333333333333333333333333333333333333",
+      "fn": "getReserves",
+      "depth": 1,
+      "ok": true
+    }
+  ],
+  "events": [
+    {
+      "id": "event-1",
+      "name": "SwapAttempted",
+      "address": "0x2222222222222222222222222222222222222222",
+      "data": {
+        "amountIn": "500000",
+        "minOut": "480000"
+      }
+    }
+  ],
+  "storage": [
+    {
+      "id": "storage-1",
+      "label": "reserve0",
+      "before": "1000000",
+      "after": "1000000"
+    },
+    {
+      "id": "storage-2",
+      "label": "reserve1",
+      "before": "1000000",
+      "after": "1000000"
+    }
+  ],
+  "quantities": {
+    "amount_in": "500000",
+    "amount_out": "0",
+    "min_out": "480000",
+    "fee_paid": "0"
+  },
+  "charges": [
+    {
+      "id": "C1",
+      "name": "Reserves stay conserved when the swap reverts",
+      "expr": "reserve0_after + reserve1_after == reserve0_before + reserve1_before"
+    },
+    {
+      "id": "C2",
+      "name": "No tokens leave the pool if the output is zero",
+      "expr": "amount_out == 0"
+    },
+    {
+      "id": "C3",
+      "name": "The caller received at least min_out",
+      "expr": "amount_out >= min_out"
+    }
+  ]
+}

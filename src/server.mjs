@@ -6,11 +6,13 @@ import { listCases, loadCase } from "./trace.mjs";
 import { sit } from "./inquest.mjs";
 import { renderVerdict } from "./verdict.mjs";
 
-const publicDir = join(fileURLToPath(new URL(".", import.meta.url)), "..", "public");
+const root = join(fileURLToPath(new URL(".", import.meta.url)), "..");
+const publicDir = join(root, "public");
 const types = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
+  ".mjs": "text/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
   ".svg": "image/svg+xml",
 };
@@ -32,11 +34,19 @@ async function readBody(req) {
   return JSON.parse(raw);
 }
 
-function sittingPayload(id) {
+async function sittingPayload(id) {
   const record = loadCase(id);
   const sitting = sit(record);
-  const verdict = renderVerdict(sitting);
+  const verdict = await renderVerdict(sitting);
   return { ...sitting, verdict };
+}
+
+function resolveStatic(pathname) {
+  const file = pathname === "/" ? "index.html" : pathname.slice(1);
+  if (!file || file.includes("..")) return null;
+  if (file.startsWith("lib/")) return join(root, "src", file.slice(4));
+  if (file.startsWith("fixtures/")) return join(root, "fixtures", file.slice(9));
+  return join(publicDir, file);
 }
 
 const server = createServer(async (req, res) => {
@@ -49,20 +59,19 @@ const server = createServer(async (req, res) => {
       const body = await readBody(req);
       const id = String(body.id ?? "");
       try {
-        return json(res, 200, sittingPayload(id));
+        return json(res, 200, await sittingPayload(id));
       } catch (err) {
         const message = err instanceof Error ? err.message : "unknown case";
         return json(res, 404, { error: message });
       }
     }
     if (req.method === "GET") {
-      const file = url.pathname === "/" ? "index.html" : url.pathname.slice(1);
-      if (file.includes("..")) {
+      const path = resolveStatic(url.pathname);
+      if (!path) {
         res.writeHead(404);
         res.end("not found");
         return;
       }
-      const path = join(publicDir, file);
       const data = await readFile(path);
       res.writeHead(200, { "content-type": types[extname(path)] ?? "application/octet-stream" });
       res.end(data);
@@ -71,6 +80,11 @@ const server = createServer(async (req, res) => {
     res.writeHead(405);
     res.end("method not allowed");
   } catch (err) {
+    if (err && err.code === "ENOENT") {
+      res.writeHead(404);
+      res.end("not found");
+      return;
+    }
     json(res, 500, { error: "server error" });
   }
 });

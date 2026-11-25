@@ -3,37 +3,47 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Inquest</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <title>Inquest — the record, and nothing else</title>
+  <meta name="description" content="A coroner's inquest for a dead or suspicious smart-contract transaction. Designed, built and developed by Saddam Malik, India." />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
+  <a class="skip" href="#docket">Skip to the docket</a>
   <header class="mast">
     <p class="eyebrow">Inquest</p>
     <h1>The record, and nothing else.</h1>
     <p class="lede">A coroner's sitting for a dead or suspicious smart-contract transaction. Witnesses speak only to what is in the trace. The verdict is sealed with a hash.</p>
   </header>
   <main>
-    <section class="docket" aria-label="Case docket">
+    <section class="docket" id="docket" aria-label="Case docket">
       <h2>Docket</h2>
+      <p class="hint">Three official cases. Open one to seat the witnesses and read the charges.</p>
       <div id="cases" class="cases"></div>
+      <dl id="meta" class="meta" hidden></dl>
     </section>
     <section class="panel" aria-label="Witnesses">
-      <h2>Witnesses</h2>
+      <h2>Witnesses <span id="witness-count" class="count"></span></h2>
       <div id="witnesses" class="list"></div>
     </section>
     <section class="panel" aria-label="Charge sheet">
-      <h2>Charge sheet</h2>
+      <h2>Charge sheet <span id="charge-count" class="count"></span></h2>
       <div id="charges" class="list"></div>
     </section>
-    <section class="letter" aria-label="Verdict">
-      <h2>Verdict</h2>
+    <section class="letter" id="letter" aria-label="Verdict">
+      <div class="letter-head">
+        <h2>Verdict</h2>
+        <p id="finding" class="finding" hidden></p>
+      </div>
       <pre id="verdict">Open a case from the docket.</pre>
-      <p id="seal" class="seal" hidden></p>
+      <div class="letter-foot">
+        <p id="seal" class="seal" hidden></p>
+        <button type="button" id="copy-letter" class="ghost" hidden>Copy letter</button>
+      </div>
     </section>
   </main>
   <footer>
-    <p>Designed, built and developed by Saddam Malik, India. Missing facts are marked “not in the record.”</p>
+    <p>Designed, built and developed by Saddam Malik, India. Missing facts are marked “not in the record.” <a href="https://saddammalik.com">saddammalik.com</a></p>
   </footer>
-  <script src="/app.js" type="module"></script>
+  <script src="./app.js" type="module"></script>
 </body>
 </html>

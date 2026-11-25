@@ -1,0 +1,66 @@
+{
+  "id": "clean-transfer",
+  "title": "Treasury transfer, 18 November",
+  "network": "local-fixture",
+  "txHash": "0xbbb2220000000000000000000000000000000000000000000000000000000002",
+  "from": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "to": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "status": "ok",
+  "summary": "A simple transfer. Balances move by the recorded amount and nothing else.",
+  "calls": [
+    {
+      "id": "call-1",
+      "from": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "to": "0xcccccccccccccccccccccccccccccccccccccccc",
+      "fn": "transfer",
+      "depth": 0,
+      "ok": true
+    }
+  ],
+  "events": [
+    {
+      "id": "event-1",
+      "name": "Transfer",
+      "address": "0xcccccccccccccccccccccccccccccccccccccccc",
+      "data": {
+        "from": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "to": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "value": "2500"
+      }
+    }
+  ],
+  "storage": [
+    {
+      "id": "storage-1",
+      "label": "balance_a",
+      "before": "10000",
+      "after": "7500"
+    },
+    {
+      "id": "storage-2",
+      "label": "balance_b",
+      "before": "100",
+      "after": "2600"
+    }
+  ],
+  "quantities": {
+    "amount": "2500"
+  },
+  "charges": [
+    {
+      "id": "C1",
+      "name": "Sender balance falls by the amount",
+      "expr": "balance_a_before - amount == balance_a_after"
+    },
+    {
+      "id": "C2",
+      "name": "Recipient balance rises by the amount",
+      "expr": "balance_b_before + amount == balance_b_after"
+    },
+    {
+      "id": "C3",
+      "name": "Total balances are conserved",
+      "expr": "balance_a_after + balance_b_after == balance_a_before + balance_b_before"
+    }
+  ]
+}
